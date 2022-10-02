@@ -5,24 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.affan.githubuserapp.databinding.ContainerListUserBinding
 
-class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewModel>() {
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
 
 //    private val itemList = listOf<>()
 
-    inner class MainViewModel (private val binding: ContainerListUserBinding)
+    inner class SearchViewModel (private val binding: ContainerListUserBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewModel {
-        return MainViewModel(ContainerListUserBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewModel {
+        return SearchViewModel(ContainerListUserBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
         )
     }
 
-    override fun onBindViewHolder(holder: MainViewModel, position: Int) {
+    override fun onBindViewHolder(holder: SearchViewModel, position: Int) {
         TODO("Not yet implemented")
     }
 
