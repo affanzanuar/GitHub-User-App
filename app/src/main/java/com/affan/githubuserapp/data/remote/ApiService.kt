@@ -11,6 +11,6 @@ interface ApiService {
         @Query("q") userName : String,
         @Query("per_page") perPage : Int,
         @Query("page") page : Int
-    ) : User
+    ) : List<User>
 
 }

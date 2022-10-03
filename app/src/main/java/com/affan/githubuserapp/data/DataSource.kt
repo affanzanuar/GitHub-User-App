@@ -8,6 +8,6 @@ interface DataSource {
         userName : String,
         perPage : Int,
         page : Int
-    ) : User
+    ) : List<User>
 
 }

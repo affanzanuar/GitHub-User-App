@@ -20,6 +20,9 @@ class SearchViewModel (
     private val _users = MutableLiveData<List<User>>()
     val users : LiveData<List<User>> = _users
 
+    private val _error = MutableLiveData<String>()
+    val error : LiveData<String> = _error
+
     fun getUsersSearch (userName : String, perPage : Int, page : Int) {
         viewModelScope.launch {
             runCatching {
@@ -29,11 +32,16 @@ class SearchViewModel (
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
-//                    _users.value = data
+                    _isLoading.value = false
+                    _users.value = data
+                }
+            }.onFailure { error ->
+                withContext(Dispatchers.Main){
+                    _isLoading.value = false
+                    _error.value = error.message
                 }
             }
         }
     }
-
 
 }

@@ -7,7 +7,7 @@ class RepositoryImp (
     private val remoteDataSource: DataSource
         ) : Repository {
 
-    override suspend fun getSearchUsers(userName: String, perPage: Int, page: Int): User {
+    override suspend fun getSearchUsers(userName: String, perPage: Int, page: Int): List<User> {
         return remoteDataSource.getSearchUsers(userName,perPage,page)
     }
 

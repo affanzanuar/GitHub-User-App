@@ -8,6 +8,6 @@ interface Repository {
         userName : String,
         perPage : Int,
         page : Int
-    ) : User
+    ) : List<User>
 
 }
