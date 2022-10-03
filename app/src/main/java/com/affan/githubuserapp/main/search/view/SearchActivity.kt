@@ -2,10 +2,11 @@ package com.affan.githubuserapp.main.search.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.affan.githubuserapp.R
 import com.affan.githubuserapp.databinding.ActivitySearchBinding
 import com.affan.githubuserapp.di.ViewModelFactory
 import com.affan.githubuserapp.main.search.adapter.SearchAdapter
@@ -28,6 +29,19 @@ class SearchActivity : AppCompatActivity() {
             ViewModelFactory.getInstance
         )[SearchViewModel::class.java]
         setAdapter()
+        getObserve()
+
+        binding.skLoadingListUser.visibility = View.GONE
+        binding.ivSearch.setOnClickListener {
+            setUserName()
+        }
+
+    }
+
+    private fun setUserName(){
+        val userName = binding.edtSearch.text.toString()
+        if (userName.isEmpty()) return
+        searchViewModel.getUsersSearch(userName)
     }
 
     private fun setAdapter() {
@@ -39,13 +53,22 @@ class SearchActivity : AppCompatActivity() {
     private fun getObserve() {
 
         searchViewModel.isLoading.observe(this){ isLoading ->
-
             if (isLoading == true){
                 binding.rvListUsers.visibility = View.GONE
+                binding.skLoadingListUser.visibility = View.VISIBLE
             } else {
                 binding.rvListUsers.visibility = View.VISIBLE
+                binding.skLoadingListUser.visibility = View.GONE
             }
+        }
 
+        searchViewModel.users.observe(this){ data ->
+            searchAdapter.setData(data)
+        }
+
+        searchViewModel.error.observe(this){error ->
+            Toast.makeText(this,error,Toast.LENGTH_LONG).show()
+            Log.d("SearchActivity",error)
         }
 
     }

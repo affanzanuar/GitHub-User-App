@@ -26,9 +26,9 @@ class SearchViewModel (
     fun getUsersSearch (userName : String) {
         viewModelScope.launch {
             runCatching {
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.Main){
                     _isLoading.value = true
-                    repository.getSearchUsers(userName,100,10)
+                    repository.getSearchUsers(userName,100,1)
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
