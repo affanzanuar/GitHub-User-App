@@ -1,13 +1,13 @@
-package com.affan.githubuserapp.data.model
+package com.affan.githubuserapp.data.model.user
 
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class UserResponse(
     @SerializedName("incomplete_results")
     val incompleteResults: Boolean?,
     @SerializedName("items")
-    val items: List<Item?>?,
+    val items: List<User?>?,
     @SerializedName("total_count")
     val totalCount: Int?
 )
