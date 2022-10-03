@@ -6,7 +6,9 @@ import com.affan.githubuserapp.data.model.user.User
 class RepositoryImp (
     private val remoteDataSource: DataSource
         ) : Repository {
+
     override fun getSearchUsers(userName: String, perPage: Int, page: Int): User {
-        TODO("Not yet implemented")
+        return remoteDataSource.getSearchUsers(userName,perPage,page)
     }
+
 }
