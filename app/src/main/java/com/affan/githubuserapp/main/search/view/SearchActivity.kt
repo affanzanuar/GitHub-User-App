@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ActivitySearchBinding
 import com.affan.githubuserapp.di.ViewModelFactory
 import com.affan.githubuserapp.main.search.adapter.SearchAdapter
@@ -63,7 +64,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchViewModel.users.observe(this){ data ->
-            searchAdapter.setData(data)
+            searchAdapter.setData(data as List<User>)
         }
 
         searchViewModel.error.observe(this){error ->

@@ -1,6 +1,7 @@
 package com.affan.githubuserapp.data
 
 import com.affan.githubuserapp.data.model.user.User
+import com.affan.githubuserapp.data.model.user.UserResponse
 
 interface DataSource {
 
@@ -8,6 +9,6 @@ interface DataSource {
         userName : String,
         perPage : Int,
         page : Int
-    ) : List<User>
+    ) : UserResponse
 
 }
