@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.affan.githubuserapp.R
 import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ContainerListUserBinding
 import com.bumptech.glide.Glide
@@ -17,6 +18,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
             fun bind ( item : User) {
                 Glide.with(binding.root)
                     .load(item.avatarUrl)
+                    .placeholder(R.drawable.ic_default_profil_picture)
+                    .circleCrop()
                     .into(binding.ivProfilePicture)
 
                 binding.tvUserNameList.text = item.login
