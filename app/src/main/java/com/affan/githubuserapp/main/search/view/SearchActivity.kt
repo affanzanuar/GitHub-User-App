@@ -28,7 +28,7 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var mLayoutManager : LinearLayoutManager
 
-    private var isLoading = false
+//    private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,23 +40,32 @@ class SearchActivity : AppCompatActivity() {
         )[SearchViewModel::class.java]
 
         mLayoutManager = LinearLayoutManager(this)
-        
+
 
         setAdapter()
         getObserve()
 
         binding.skLoadingListUser.visibility = View.GONE
         binding.ivSearch.setOnClickListener {
-            setUserName()
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    setUserName(5000)
+                }
+            }
         }
 
     }
 
-    private fun setUserName(){
-        isLoading = true
+    private suspend fun setUserName(interval : Long){
+//        isLoading = true
         val userName = binding.edtSearch.text.toString()
         if (userName.isEmpty()) return
-        searchViewModel.getUsersSearch(userName,1)
+
+        for (i in 1..10){
+            searchViewModel.getUsersSearch(userName,i)
+            delay(interval)
+        }
+        Log.d("what if itemCount",mLayoutManager.itemCount.toString())
     }
 
     private fun setAdapter() {
@@ -72,46 +81,46 @@ class SearchActivity : AppCompatActivity() {
 //                }
 //            }
 //        }
-        binding.rvListUsers.addOnScrollListener(object  : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                Log.d("what if DX DX DX",dx.toString())
-                Log.d("what if DY DY DY",dy.toString())
-                Log.d("what if scrollState",recyclerView.scrollState.toString())
-                Log.d("what if itemDecorationCount",recyclerView.itemDecorationCount.toString())
-                Log.d("what if childCount",recyclerView.childCount.toString())
-                Log.d("what if findFirstCompletelyVisibleItemPosition",mLayoutManager.findFirstCompletelyVisibleItemPosition().toString())
-                Log.d("what if itemCount",mLayoutManager.itemCount.toString())
-                Log.d("what if recycleChildrenOnDetach",mLayoutManager.recycleChildrenOnDetach.toString())
-                Log.d("what if initialPrefetchItemCount",mLayoutManager.initialPrefetchItemCount.toString())
-//                Log.d("what if initialPrefetchItemCount",mLayoutManager.)
-                val userName = binding.edtSearch.text.toString()
-                val mItem = mLayoutManager.childCount
-                val lItem = mLayoutManager.findFirstCompletelyVisibleItemPosition()
-                val count = mLayoutManager.itemCount
-                if (mItem+lItem == count){
-//                    Handler().postDelayed({
-//                        searchViewModel.run { getUsersSearch(userName,2) }
-//                    },2000)
-//                        searchViewModel.getUsersSearch(userName,2)
-//                    lifecycleScope.launch {
-//                        withContext(Dispatchers.IO){
-//                            getUserPageSearch(5000)
-//                                                    }
-//                    }
-                }
-//                if (mLayoutManager.itemCount == 200){
-//                    Handler().postDelayed({
-//                        searchViewModel.run { getUsersSearch(userName,3) }
-//                    },2000)
-////                    searchViewModel.getUsersSearch(userName,3)
-//                }
-//                if (mLayoutManager.findFirstVisibleItemPosition() == 250){
-//                    val userName = binding.edtSearch.text.toString()
-//                    searchViewModel.getUsersSearch(userName,4)
-//                }
-            }
-        })
+//        binding.rvListUsers.addOnScrollListener(object  : RecyclerView.OnScrollListener(){
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                Log.d("what if DX DX DX",dx.toString())
+//                Log.d("what if DY DY DY",dy.toString())
+//                Log.d("what if scrollState",recyclerView.scrollState.toString())
+//                Log.d("what if itemDecorationCount",recyclerView.itemDecorationCount.toString())
+//                Log.d("what if childCount",recyclerView.childCount.toString())
+//                Log.d("what if findFirstCompletelyVisibleItemPosition",mLayoutManager.findFirstCompletelyVisibleItemPosition().toString())
+//                Log.d("what if itemCount",mLayoutManager.itemCount.toString())
+//                Log.d("what if recycleChildrenOnDetach",mLayoutManager.recycleChildrenOnDetach.toString())
+//                Log.d("what if initialPrefetchItemCount",mLayoutManager.initialPrefetchItemCount.toString())
+////                Log.d("what if initialPrefetchItemCount",mLayoutManager.)
+//                val userName = binding.edtSearch.text.toString()
+//                val mItem = mLayoutManager.childCount
+//                val lItem = mLayoutManager.findFirstCompletelyVisibleItemPosition()
+//                val count = mLayoutManager.itemCount
+////                if (mItem+lItem == count){
+////                    Handler().postDelayed({
+////                        searchViewModel.run { getUsersSearch(userName,2) }
+////                    },2000)
+////                        searchViewModel.getUsersSearch(userName,2)
+////                    lifecycleScope.launch {
+////                        withContext(Dispatchers.IO){
+////                            getUserPageSearch(5000)
+////                                                    }
+////                    }
+////                }
+////                if (mLayoutManager.itemCount == 200){
+////                    Handler().postDelayed({
+////                        searchViewModel.run { getUsersSearch(userName,3) }
+////                    },2000)
+//////                    searchViewModel.getUsersSearch(userName,3)
+////                }
+////                if (mLayoutManager.findFirstVisibleItemPosition() == 250){
+////                    val userName = binding.edtSearch.text.toString()
+////                    searchViewModel.getUsersSearch(userName,4)
+////                }
+//            }
+//        })
     }
 
 //    private suspend fun getUserPageSearch(interval : Long){
