@@ -8,8 +8,8 @@ class RemoteDataSource(
     private val apiService: ApiService
 ) : DataSource {
 
-    override suspend fun getSearchUsers(userName: String, perPage: Int, page: Int): UserResponse {
-        return apiService.getSearchUsers(userName,perPage,page)
+    override suspend fun getSearchUsers(token : String, userName: String, perPage: Int, page: Int): UserResponse {
+        return apiService.getSearchUsers(token,userName,perPage,page)
     }
 
 }

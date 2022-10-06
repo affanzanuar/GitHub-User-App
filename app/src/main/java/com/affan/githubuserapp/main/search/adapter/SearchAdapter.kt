@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
 
-    private val itemList = mutableListOf<User>()
+    private val itemList = mutableListOf<User?>()
 
     inner class SearchViewModel (private val binding: ContainerListUserBinding)
         : RecyclerView.ViewHolder(binding.root) {
@@ -36,7 +36,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
     }
 
     override fun onBindViewHolder(holder: SearchViewModel, position: Int) {
-        holder.bind(itemList[position])
+        itemList[position]?.let { holder.bind(it) }
     }
 
     override fun getItemCount(): Int {
@@ -44,9 +44,14 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData (item : List<User>){
-        itemList.clear()
+    fun setData (item : List<User?>){
         itemList.addAll(item)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearData (){
+        itemList.clear()
         notifyDataSetChanged()
     }
 }

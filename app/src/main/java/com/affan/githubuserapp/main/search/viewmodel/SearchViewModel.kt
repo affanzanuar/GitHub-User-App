@@ -23,12 +23,12 @@ class SearchViewModel (
     private val _error = MutableLiveData<String>()
     val error : LiveData<String> = _error
 
-    fun getUsersSearch (userName : String) {
+    fun getUsersSearch (userName : String, page : Int) {
         viewModelScope.launch {
             runCatching {
                 withContext(Dispatchers.Main){
                     _isLoading.value = true
-                    repository.getSearchUsers(userName,100,1).items
+                    repository.getSearchUsers("token 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",userName,100,page).items
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
