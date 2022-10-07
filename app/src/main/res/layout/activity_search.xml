@@ -45,6 +45,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+<!--    <com.github.ybq.android.spinkit.SpinKitView-->
+<!--        android:id="@+id/skLoadingBottom"-->
+<!--        style="@style/SpinKitView.Large.Wave"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:SpinKit_Color="@color/white"-->
+<!--        android:layout_marginTop="-500dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/rvListUsers"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/skLoadingListUser"
