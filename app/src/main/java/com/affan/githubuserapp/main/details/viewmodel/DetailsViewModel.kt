@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.affan.githubuserapp.data.model.details.DetailsResponse
-import com.affan.githubuserapp.data.util.Utility
 import com.affan.githubuserapp.domain.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +26,7 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
             runCatching {
                 _isLoading.value = true
                 withContext(Dispatchers.IO){
-                    repository.getDetails(userName,Utility.TOKEN)
+                    repository.getDetails(userName)
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){

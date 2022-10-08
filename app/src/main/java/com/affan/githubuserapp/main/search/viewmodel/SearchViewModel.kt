@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.affan.githubuserapp.data.model.user.User
-import com.affan.githubuserapp.data.model.user.UserResponse
-import com.affan.githubuserapp.data.util.Utility
 import com.affan.githubuserapp.domain.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +26,7 @@ class SearchViewModel (
         viewModelScope.launch {
             runCatching {
                 withContext(Dispatchers.IO){
-                    repository.getSearchUsers(Utility.TOKEN,userName,100,usersSearchPage)
+                    repository.getSearchUsers(userName,100,usersSearchPage)
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
