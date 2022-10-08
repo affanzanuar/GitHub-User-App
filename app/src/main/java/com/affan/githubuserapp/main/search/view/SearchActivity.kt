@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.AbsListView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +54,15 @@ class SearchActivity : AppCompatActivity() {
             searchAdapter.clearData()
             viewModel.usersSearchPage = 1
             getUserName()
+        }
+
+        binding.edtSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchAdapter.clearData()
+                viewModel.usersSearchPage = 1
+                getUserName()
+            }
+            true
         }
     }
 
