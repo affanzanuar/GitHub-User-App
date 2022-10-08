@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +45,7 @@ class SearchActivity : AppCompatActivity() {
         getObserve()
 
         binding.skLoadingListUser.visibility = View.GONE
+
         binding.ivSearch.setOnClickListener {
             searchAdapter.clearData()
             getUserName()
@@ -72,7 +72,6 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchViewModel.error.observe(this){error ->
-            Toast.makeText(this,error,Toast.LENGTH_LONG).show()
             Log.d("SearchActivity",error)
         }
     }
@@ -96,7 +95,7 @@ class SearchActivity : AppCompatActivity() {
 
             if (shouldPaginate){
                 getUserName()
-                Log.e("what shouldPaginae", "SHOULD PAGINATE")
+                Log.e("what shouldPaginate", "SHOULD PAGINATE")
                 Log.e("what mItemCount", mItemCount.toString())
                 isScrolling = false
             }

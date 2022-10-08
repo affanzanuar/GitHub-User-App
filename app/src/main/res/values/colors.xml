@@ -12,4 +12,7 @@
     <color name="old_grey">#6B6B6B</color>
     <color name="grey">#CFCFCF</color>
     <color name="orange">#DD5F01</color>
+    <color name="toolbar_github">#161b22</color>
+    <color name="background_main">#010409</color>
+
 </resources>
