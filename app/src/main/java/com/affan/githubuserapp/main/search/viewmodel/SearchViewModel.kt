@@ -32,6 +32,10 @@ class SearchViewModel (
     private val _error = MutableLiveData<String>()
     val error : LiveData<String> = _error
 
+    fun clearResponse (){
+        usersSearchResponse?.items?.clear()
+    }
+
     fun getUsersSearch (userName : String) {
         viewModelScope.launch {
             runCatching {
