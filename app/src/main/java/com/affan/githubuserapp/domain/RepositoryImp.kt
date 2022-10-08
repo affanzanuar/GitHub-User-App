@@ -9,12 +9,20 @@ class RepositoryImp (
     private val remoteDataSource: DataSource
         ) : Repository {
 
-    override suspend fun getSearchUsers(token : String,userName: String, perPage: Int, page: Int): UserResponse {
+    override suspend fun getSearchUsers(
+        token : String,
+        userName: String,
+        perPage: Int,
+        page: Int
+    ): UserResponse {
         return remoteDataSource.getSearchUsers(token, userName,perPage,page)
     }
 
-    override suspend fun getDetails(userName: String, token: String): DetailsResponse {
-        TODO("Not yet implemented")
+    override suspend fun getDetails(
+        userName: String,
+        token: String
+    ): DetailsResponse {
+        return remoteDataSource.getDetails(userName,token)
     }
 
 }
