@@ -51,6 +51,7 @@ class SearchActivity : AppCompatActivity() {
 
         binding.ivSearch.setOnClickListener {
             searchAdapter.clearData()
+            viewModel.usersSearchPage = 1
             getUserName()
         }
     }
@@ -103,7 +104,8 @@ class SearchActivity : AppCompatActivity() {
                     isLastItem && isNotBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate){
-                getUserName()
+                val userName = binding.edtSearch.text.toString()
+                viewModel.getUsersSearch(userName)
                 Log.e("what shouldPaginate", "SHOULD PAGINATE")
                 Log.e("what mItemCount", mItemCount.toString())
                 isScrolling = false

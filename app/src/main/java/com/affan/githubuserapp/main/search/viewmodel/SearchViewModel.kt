@@ -19,8 +19,7 @@ class SearchViewModel (
     private val _users = MutableLiveData<List<User?>>()
     val users : LiveData<List<User?>> = _users
 
-    private var usersSearchPage = 1
-    private var usersSearchResponse : UserResponse? = null
+    var usersSearchPage = 1
 
     private val _error = MutableLiveData<String>()
     val error : LiveData<String> = _error
@@ -33,19 +32,11 @@ class SearchViewModel (
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
+                    _users.value = data.items!!
                     usersSearchPage++
                     Log.e("what VM usersSearchPage 44", usersSearchPage.toString())
-                    if (usersSearchResponse == null) {
-                        usersSearchResponse = data
-                    } else {
-                        val oldPage = usersSearchResponse?.items
-                        val newPage = data.items
-                        oldPage?.addAll(newPage!!)
-                        Log.e("what old Page", oldPage.toString())
-                        Log.e("what new Page", newPage.toString())
-                    }
                     Log.e("what VM usersSearchPage 51", usersSearchPage.toString())
-                    _users.value = data.items!!
+
                 }
             }.onFailure { error ->
                 withContext(Dispatchers.Main){
