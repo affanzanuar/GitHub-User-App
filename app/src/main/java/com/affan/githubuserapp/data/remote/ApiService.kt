@@ -1,6 +1,6 @@
 package com.affan.githubuserapp.data.remote
 
-import com.affan.githubuserapp.data.model.user.User
+import com.affan.githubuserapp.data.model.details.DetailsResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -21,6 +21,6 @@ interface ApiService {
     suspend fun getDetails (
         @Path("username") userName: String,
         @Header("Authorization") token : String,
-    )
+    ) : DetailsResponse
 
 }
