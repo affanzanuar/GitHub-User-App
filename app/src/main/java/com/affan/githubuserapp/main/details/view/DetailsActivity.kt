@@ -1,4 +1,4 @@
-package com.affan.githubuserapp.main.details
+package com.affan.githubuserapp.main.details.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
