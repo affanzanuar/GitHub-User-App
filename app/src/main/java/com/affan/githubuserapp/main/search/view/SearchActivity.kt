@@ -1,5 +1,6 @@
 package com.affan.githubuserapp.main.search.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +9,10 @@ import android.widget.AbsListView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ActivitySearchBinding
 import com.affan.githubuserapp.di.ViewModelFactory
+import com.affan.githubuserapp.main.details.view.DetailsActivity
 import com.affan.githubuserapp.main.search.adapter.SearchAdapter
 import com.affan.githubuserapp.main.search.viewmodel.SearchViewModel
 
@@ -17,7 +20,7 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySearchBinding
 
-    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var viewModel: SearchViewModel
 
     private lateinit var searchAdapter: SearchAdapter
 
@@ -33,7 +36,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        searchViewModel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance
         )[SearchViewModel::class.java]
@@ -54,24 +57,51 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getUserName(){
         val userName = binding.edtSearch.text.toString()
-        searchViewModel.getUsersSearch(userName)
+        viewModel.getUsersSearch(userName)
     }
 
     private fun setupRecyclerView() {
         binding.rvListUsers.setHasFixedSize(true)
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter {data: User -> intentToDetails(data) }
         binding.rvListUsers.adapter = searchAdapter
         binding.rvListUsers.layoutManager = mLayoutManager
         binding.rvListUsers.addOnScrollListener(this.scrollListener)
     }
 
+    private fun intentToDetails (data : User) {
+        val intent = Intent(this,DetailsActivity::class.java)
+        val parcelable = User(
+            data.avatarUrl,
+            data.eventsUrl,
+            data.followersUrl,
+            data.followingUrl,
+            data.gistsUrl,
+            data.gravatarId,
+            data.htmlUrl,
+            data.id,
+            data.login,
+            data.nodeId,
+            data.organizationsUrl,
+            data.receivedEventsUrl,
+            data.reposUrl,
+            data.score,
+            data.siteAdmin,
+            data.starredUrl,
+            data.subscriptionsUrl,
+            data.type,
+            data.url
+        )
+        intent.putExtra(EXTRAS_DATA,parcelable)
+        startActivity(intent)
+    }
+
 
     private fun getObserve() {
-        searchViewModel.users.observe(this){ data ->
+        viewModel.users.observe(this){ data ->
             searchAdapter.setData(data)
         }
 
-        searchViewModel.error.observe(this){error ->
+        viewModel.error.observe(this){error ->
             Log.d("SearchActivity",error)
         }
     }
@@ -107,5 +137,9 @@ class SearchActivity : AppCompatActivity() {
                 isScrolling = true
             }
         }
+    }
+
+    companion object {
+        const val EXTRAS_DATA = "extras_data"
     }
 }

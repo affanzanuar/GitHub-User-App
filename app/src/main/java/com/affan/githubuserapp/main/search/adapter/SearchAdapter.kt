@@ -9,7 +9,9 @@ import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ContainerListUserBinding
 import com.bumptech.glide.Glide
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
+class SearchAdapter (
+    private val onClickUser : (data : User) -> Unit
+        ) : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
 
     private val itemList = mutableListOf<User?>()
 
@@ -23,8 +25,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
                     .into(binding.ivProfilePicture)
 
                 binding.tvUserNameList.text = item.login
-            }
 
+                binding.root.setOnClickListener {
+                    onClickUser
+                }
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewModel {
