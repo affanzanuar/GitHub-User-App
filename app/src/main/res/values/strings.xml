@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Github User App</string>
+    <string name="empty_blog">Don\'t Have Blog</string>
 </resources>

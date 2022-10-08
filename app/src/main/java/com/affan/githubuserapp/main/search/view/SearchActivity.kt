@@ -70,28 +70,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun intentToDetails (data : User) {
         val intent = Intent(this,DetailsActivity::class.java)
-        val parcelable = User(
-            data.avatarUrl,
-            data.eventsUrl,
-            data.followersUrl,
-            data.followingUrl,
-            data.gistsUrl,
-            data.gravatarId,
-            data.htmlUrl,
-            data.id,
-            data.login,
-            data.nodeId,
-            data.organizationsUrl,
-            data.receivedEventsUrl,
-            data.reposUrl,
-            data.score,
-            data.siteAdmin,
-            data.starredUrl,
-            data.subscriptionsUrl,
-            data.type,
-            data.url
-        )
-        intent.putExtra(EXTRAS_DATA,parcelable)
+        intent.putExtra(EXTRAS_DATA_USERNAME,data.login)
         startActivity(intent)
     }
 
@@ -140,6 +119,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRAS_DATA = "extras_data"
+        const val EXTRAS_DATA_USERNAME = "extras_data"
     }
 }

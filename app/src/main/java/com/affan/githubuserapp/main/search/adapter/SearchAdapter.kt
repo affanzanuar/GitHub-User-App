@@ -15,7 +15,7 @@ class SearchAdapter (
 
     private val itemList = mutableListOf<User?>()
 
-    inner class SearchViewModel (private val binding: ContainerListUserBinding)
+    inner class SearchViewModel (val binding: ContainerListUserBinding)
         : RecyclerView.ViewHolder(binding.root) {
             fun bind ( item : User) {
                 Glide.with(binding.root)
@@ -25,10 +25,6 @@ class SearchAdapter (
                     .into(binding.ivProfilePicture)
 
                 binding.tvUserNameList.text = item.login
-
-                binding.root.setOnClickListener {
-                    onClickUser
-                }
             }
     }
 
@@ -42,6 +38,10 @@ class SearchAdapter (
 
     override fun onBindViewHolder(holder: SearchViewModel, position: Int) {
         itemList[position]?.let { holder.bind(it) }
+
+        holder.binding.root.setOnClickListener {
+            itemList[position]?.let { it1 -> onClickUser(it1) }
+        }
     }
 
     override fun getItemCount(): Int {

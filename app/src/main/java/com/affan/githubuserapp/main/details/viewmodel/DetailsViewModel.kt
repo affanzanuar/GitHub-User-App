@@ -32,10 +32,12 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
                     _usersDetails.value = data
+                    _isLoading.value = false
                 }
             }.onFailure { error ->
                 withContext(Dispatchers.Main){
                     _error.value = error.message
+                    _isLoading.value = false
                 }
             }
         }

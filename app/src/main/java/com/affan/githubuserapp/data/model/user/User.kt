@@ -1,11 +1,8 @@
 package com.affan.githubuserapp.data.model.user
 
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class User(
     @SerializedName("avatar_url")
     val avatarUrl: String?,
@@ -45,4 +42,4 @@ data class User(
     val type: String?,
     @SerializedName("url")
     val url: String?
-) : Parcelable
+)
