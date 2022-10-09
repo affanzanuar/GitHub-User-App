@@ -10,6 +10,7 @@ import com.affan.githubuserapp.data.remote.RemoteDataSource
 import com.affan.githubuserapp.domain.Repository
 import com.affan.githubuserapp.domain.RepositoryImp
 import com.affan.githubuserapp.main.details.viewmodel.DetailsViewModel
+import com.affan.githubuserapp.main.favorite.viewmodel.FavoriteViewModel
 import com.affan.githubuserapp.main.search.viewmodel.SearchViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,6 +26,7 @@ class ViewModelFactory (
         return when(modelClass) {
             SearchViewModel::class.java -> SearchViewModel(repository) as T
             DetailsViewModel::class.java -> DetailsViewModel(repository) as T
+            FavoriteViewModel::class.java -> FavoriteViewModel(repository) as T
             else ->throw UnsupportedOperationException()
         }
     }
