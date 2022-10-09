@@ -199,7 +199,7 @@
         android:id="@+id/cvRepo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8sp"
+        android:layout_marginTop="8dp"
         android:layout_marginHorizontal="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/toolbar_github"
@@ -254,5 +254,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRepository"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/cvRepo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
