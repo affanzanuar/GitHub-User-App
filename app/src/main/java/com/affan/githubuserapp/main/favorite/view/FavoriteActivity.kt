@@ -12,5 +12,10 @@ class FavoriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
     }
 }

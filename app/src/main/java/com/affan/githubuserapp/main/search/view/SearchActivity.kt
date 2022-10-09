@@ -17,6 +17,7 @@ import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ActivitySearchBinding
 import com.affan.githubuserapp.di.ViewModelFactory
 import com.affan.githubuserapp.main.details.view.DetailsActivity
+import com.affan.githubuserapp.main.favorite.view.FavoriteActivity
 import com.affan.githubuserapp.main.search.adapter.SearchAdapter
 import com.affan.githubuserapp.main.search.viewmodel.SearchViewModel
 
@@ -68,6 +69,12 @@ class SearchActivity : AppCompatActivity() {
                 hideKeyboard()
             }
             true
+        }
+
+        binding.llWatchList.setOnClickListener {
+            Intent(this,FavoriteActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 
