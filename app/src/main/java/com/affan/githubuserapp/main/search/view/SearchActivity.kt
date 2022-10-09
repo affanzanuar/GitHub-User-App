@@ -121,9 +121,9 @@ class SearchActivity : AppCompatActivity() {
             val mItemCount = layoutManager.itemCount
 
             val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-            val isLastItem = firstVisibleItemPosition + mChildCount >= mItemCount
+            val isLastItem = firstVisibleItemPosition + mChildCount >= mItemCount * 0.9
             val isNotBeginning = firstVisibleItemPosition >= 0
-            val isTotalMoreThanVisible = mItemCount >= 100
+            val isTotalMoreThanVisible = mItemCount >= 90
 
             val shouldPaginate = isNotLoadingAndNotLastPage &&
                     isLastItem && isNotBeginning && isTotalMoreThanVisible && isScrolling
