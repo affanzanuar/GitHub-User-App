@@ -3,7 +3,7 @@ package com.affan.githubuserapp.data.model.repository
 
 import com.google.gson.annotations.SerializedName
 
-data class RepositoryResponseItem(
+data class RepositoryItem(
     @SerializedName("allow_forking")
     val allowForking: Boolean?,
     @SerializedName("archive_url")
