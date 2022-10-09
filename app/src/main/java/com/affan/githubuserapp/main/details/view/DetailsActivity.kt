@@ -72,7 +72,6 @@ class DetailsActivity : AppCompatActivity() {
                 binding.cvBlog.visibility = View.GONE
                 binding.cvProfile.visibility = View.GONE
                 binding.cvRepo.visibility = View.GONE
-                binding.skLoadingRepo.visibility = View.VISIBLE
             } else {
                 binding.ivProfilePicture.visibility = View.VISIBLE
                 binding.tvName.visibility = View.VISIBLE
@@ -87,6 +86,13 @@ class DetailsActivity : AppCompatActivity() {
                 binding.cvBlog.visibility = View.VISIBLE
                 binding.cvProfile.visibility = View.VISIBLE
                 binding.cvRepo.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.isLoadingRepo.observe(this) { isLoading ->
+            if (isLoading){
+                binding.skLoadingRepo.visibility = View.VISIBLE
+            } else {
                 binding.skLoadingRepo.visibility = View.GONE
             }
         }

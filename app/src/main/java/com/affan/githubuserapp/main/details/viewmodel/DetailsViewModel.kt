@@ -16,6 +16,9 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading : LiveData<Boolean> = _isLoading
 
+    private val _isLoadingRepo = MutableLiveData<Boolean>()
+    val isLoadingRepo : LiveData<Boolean> = _isLoadingRepo
+
     private val _usersDetails = MutableLiveData<DetailsResponse?>()
     val usersDetails : LiveData<DetailsResponse?> = _usersDetails
 
@@ -49,19 +52,19 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
     fun getRepository (userName : String) {
         viewModelScope.launch {
             runCatching {
-                _isLoading.value = true
+                _isLoadingRepo.value = true
                 withContext(Dispatchers.IO){
                     repository.getRepository(userName,100)
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
                     _usersRepository.value = data
-                    _isLoading.value = false
+                    _isLoadingRepo.value = false
                 }
             }.onFailure { error ->
                 withContext(Dispatchers.Main){
                     _error.value = error.message
-                    _isLoading.value = false
+                    _isLoadingRepo.value = false
                 }
             }
         }
