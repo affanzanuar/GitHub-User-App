@@ -49,7 +49,7 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewH
                 val dateUpdated0 = currentDateUpdated?.get(8)
                 val dateUpdated1 = currentDateUpdated?.get(9)
                 val dateUpdated = "$dateUpdated0$dateUpdated1"
-                binding.tvLastUpdate.text = "$dateUpdated-$monthUpdated-$yearUpdated"
+                binding.tvLastUpdateRepo.text = "$dateUpdated-$monthUpdated-$yearUpdated"
             }
 
     }

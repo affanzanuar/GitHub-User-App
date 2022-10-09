@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.domain.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +18,9 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
 
     private val _usersDetails = MutableLiveData<DetailsResponse?>()
     val usersDetails : LiveData<DetailsResponse?> = _usersDetails
+
+    private val _usersRepository = MutableLiveData<RepositoryResponse?>()
+    val userRepository : LiveData<RepositoryResponse?> = _usersRepository
 
     private val _error = MutableLiveData<String>()
     val error : LiveData<String> = _error
@@ -31,6 +35,27 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){
                     _usersDetails.value = data
+                    _isLoading.value = false
+                }
+            }.onFailure { error ->
+                withContext(Dispatchers.Main){
+                    _error.value = error.message
+                    _isLoading.value = false
+                }
+            }
+        }
+    }
+
+    fun getRepository (userName : String) {
+        viewModelScope.launch {
+            runCatching {
+                _isLoading.value = true
+                withContext(Dispatchers.IO){
+                    repository.getRepository(userName)
+                }
+            }.onSuccess { data ->
+                withContext(Dispatchers.Main){
+                    _usersRepository.value = data
                     _isLoading.value = false
                 }
             }.onFailure { error ->

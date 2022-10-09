@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.affan.githubuserapp.R
 import com.affan.githubuserapp.databinding.ActivityDetailsBinding
 import com.affan.githubuserapp.di.ViewModelFactory
+import com.affan.githubuserapp.main.details.adapter.RepositoryAdapter
 import com.affan.githubuserapp.main.details.viewmodel.DetailsViewModel
 import com.affan.githubuserapp.main.search.view.SearchActivity
 import com.bumptech.glide.Glide
@@ -17,6 +19,10 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DetailsViewModel
 
+    private lateinit var layoutManager: LinearLayoutManager
+
+    private lateinit var repositoryAdapter: RepositoryAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
@@ -25,6 +31,10 @@ class DetailsActivity : AppCompatActivity() {
             this,
             ViewModelFactory.getInstance
         )[DetailsViewModel::class.java]
+
+        layoutManager = LinearLayoutManager(this)
+
+        setupAdapter()
 
         getObserve()
 
@@ -35,7 +45,14 @@ class DetailsActivity : AppCompatActivity() {
         val userName = intent.getStringExtra(SearchActivity.EXTRAS_DATA_USERNAME)
 
         viewModel.getDetails(userName!!)
+        viewModel.getRepository(userName)
 
+    }
+
+    private fun setupAdapter () {
+        repositoryAdapter = RepositoryAdapter()
+        binding.rvRepository.adapter = repositoryAdapter
+        binding.rvRepository.layoutManager = layoutManager
     }
 
     private fun getObserve () {
@@ -92,7 +109,11 @@ class DetailsActivity : AppCompatActivity() {
             binding.tvTotalFollowers.text = data.followers.toString()
             binding.tvTotalRepo.text = data.publicRepos.toString()
         }
-    }
 
+        viewModel.userRepository.observe(this) { data ->
+            repositoryAdapter.clearData()
+            repositoryAdapter.setData(data!!)
+        }
+    }
 
 }
