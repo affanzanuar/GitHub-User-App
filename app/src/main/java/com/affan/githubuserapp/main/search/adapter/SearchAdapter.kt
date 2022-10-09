@@ -9,11 +9,13 @@ import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ContainerListUserBinding
 import com.bumptech.glide.Glide
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
+class SearchAdapter (
+    private val onClickUser : (data : User) -> Unit
+        ) : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
 
     private val itemList = mutableListOf<User?>()
 
-    inner class SearchViewModel (private val binding: ContainerListUserBinding)
+    inner class SearchViewModel (val binding: ContainerListUserBinding)
         : RecyclerView.ViewHolder(binding.root) {
             fun bind ( item : User) {
                 Glide.with(binding.root)
@@ -24,7 +26,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
 
                 binding.tvUserNameList.text = item.login
             }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewModel {
@@ -37,6 +38,10 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewModel>() {
 
     override fun onBindViewHolder(holder: SearchViewModel, position: Int) {
         itemList[position]?.let { holder.bind(it) }
+
+        holder.binding.root.setOnClickListener {
+            itemList[position]?.let { it1 -> onClickUser(it1) }
+        }
     }
 
     override fun getItemCount(): Int {

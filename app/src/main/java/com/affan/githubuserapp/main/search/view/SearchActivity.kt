@@ -1,15 +1,22 @@
 package com.affan.githubuserapp.main.search.view
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.affan.githubuserapp.data.model.user.User
 import com.affan.githubuserapp.databinding.ActivitySearchBinding
 import com.affan.githubuserapp.di.ViewModelFactory
+import com.affan.githubuserapp.main.details.view.DetailsActivity
 import com.affan.githubuserapp.main.search.adapter.SearchAdapter
 import com.affan.githubuserapp.main.search.viewmodel.SearchViewModel
 
@@ -17,7 +24,7 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySearchBinding
 
-    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var viewModel: SearchViewModel
 
     private lateinit var searchAdapter: SearchAdapter
 
@@ -33,7 +40,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        searchViewModel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance
         )[SearchViewModel::class.java]
@@ -48,30 +55,58 @@ class SearchActivity : AppCompatActivity() {
 
         binding.ivSearch.setOnClickListener {
             searchAdapter.clearData()
+            viewModel.usersSearchPage = 1
             getUserName()
+            hideKeyboard()
         }
+
+        binding.edtSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchAdapter.clearData()
+                viewModel.usersSearchPage = 1
+                getUserName()
+                hideKeyboard()
+            }
+            true
+        }
+    }
+
+    private fun hideKeyboard () {
+        val view = this.currentFocus
+        if (view != null) {
+            val hide = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            hide.hideSoftInputFromWindow(view.windowToken,0)
+
+        }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
     private fun getUserName(){
         val userName = binding.edtSearch.text.toString()
-        searchViewModel.getUsersSearch(userName)
+        viewModel.getUsersSearch(userName)
     }
 
     private fun setupRecyclerView() {
         binding.rvListUsers.setHasFixedSize(true)
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter {data: User -> intentToDetails(data) }
         binding.rvListUsers.adapter = searchAdapter
         binding.rvListUsers.layoutManager = mLayoutManager
         binding.rvListUsers.addOnScrollListener(this.scrollListener)
     }
 
+    private fun intentToDetails (data : User) {
+        val intent = Intent(this,DetailsActivity::class.java)
+        intent.putExtra(EXTRAS_DATA_USERNAME,data.login)
+        startActivity(intent)
+    }
+
 
     private fun getObserve() {
-        searchViewModel.users.observe(this){ data ->
+        viewModel.users.observe(this){ data ->
             searchAdapter.setData(data)
         }
 
-        searchViewModel.error.observe(this){error ->
+        viewModel.error.observe(this){error ->
             Log.d("SearchActivity",error)
         }
     }
@@ -86,15 +121,16 @@ class SearchActivity : AppCompatActivity() {
             val mItemCount = layoutManager.itemCount
 
             val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-            val isLastItem = firstVisibleItemPosition + mChildCount >= mItemCount
+            val isLastItem = firstVisibleItemPosition + mChildCount >= mItemCount * 0.9
             val isNotBeginning = firstVisibleItemPosition >= 0
-            val isTotalMoreThanVisible = mItemCount >= 100
+            val isTotalMoreThanVisible = mItemCount >= 90
 
             val shouldPaginate = isNotLoadingAndNotLastPage &&
                     isLastItem && isNotBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate){
-                getUserName()
+                val userName = binding.edtSearch.text.toString()
+                viewModel.getUsersSearch(userName)
                 Log.e("what shouldPaginate", "SHOULD PAGINATE")
                 Log.e("what mItemCount", mItemCount.toString())
                 isScrolling = false
@@ -107,5 +143,9 @@ class SearchActivity : AppCompatActivity() {
                 isScrolling = true
             }
         }
+    }
+
+    companion object {
+        const val EXTRAS_DATA_USERNAME = "extras_data"
     }
 }
