@@ -2,6 +2,7 @@ package com.affan.githubuserapp.data.remote
 
 import com.affan.githubuserapp.data.DataSource
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 
 class RemoteDataSource(
@@ -20,6 +21,12 @@ class RemoteDataSource(
         userName: String
     ): DetailsResponse {
         return apiService.getDetails(userName)
+    }
+
+    override suspend fun getRepository(
+        userName: String
+    ): RepositoryResponse {
+        return apiService.getRepository(userName)
     }
 
 }

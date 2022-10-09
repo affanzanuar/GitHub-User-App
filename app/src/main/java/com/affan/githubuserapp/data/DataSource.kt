@@ -1,6 +1,7 @@
 package com.affan.githubuserapp.data
 
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 
 interface DataSource {
@@ -14,5 +15,9 @@ interface DataSource {
     suspend fun getDetails (
         userName: String
     ): DetailsResponse
+
+    suspend fun getRepository (
+        userName: String,
+    ): RepositoryResponse
 
 }

@@ -2,6 +2,7 @@ package com.affan.githubuserapp.domain
 
 import com.affan.githubuserapp.data.DataSource
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 
 class RepositoryImp (
@@ -20,6 +21,12 @@ class RepositoryImp (
         userName: String,
     ): DetailsResponse {
         return remoteDataSource.getDetails(userName)
+    }
+
+    override suspend fun getRepository(
+        userName: String
+    ): RepositoryResponse {
+        return remoteDataSource.getRepository(userName)
     }
 
 }
