@@ -13,6 +13,6 @@ interface FavoriteDao {
     suspend fun insertFavorite (user : Favorite)
 
     @Delete
-    suspend fun deleteFavorite (user: Favorite) : List<Favorite>
+    suspend fun deleteFavorite (user: Favorite)
 
 }

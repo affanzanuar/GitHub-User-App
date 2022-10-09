@@ -1,7 +1,10 @@
 package com.affan.githubuserapp.di
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.affan.githubuserapp.data.local.FavoriteDatabase
+import com.affan.githubuserapp.data.local.LocalDataSource
 import com.affan.githubuserapp.data.remote.ApiService
 import com.affan.githubuserapp.data.remote.RemoteDataSource
 import com.affan.githubuserapp.domain.Repository
@@ -54,10 +57,11 @@ class ViewModelFactory (
 
         @Volatile
         private var INSTANCE : ViewModelFactory? = null
-        val getInstance = synchronized(ViewModelFactory::class.java){
+        fun getInstance (context : Context) = synchronized(ViewModelFactory::class.java){
             INSTANCE ?: ViewModelFactory(
                 RepositoryImp(
-                    remoteDataSource
+                    remoteDataSource,
+                    localDataSource = LocalDataSource(FavoriteDatabase.getInstance(context))
                 )
             ).also { INSTANCE = it }
         }

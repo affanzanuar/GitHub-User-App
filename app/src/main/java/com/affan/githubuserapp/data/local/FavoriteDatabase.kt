@@ -12,7 +12,7 @@ import com.affan.githubuserapp.data.model.favorite.Favorite
 )
 abstract class FavoriteDatabase : RoomDatabase() {
 
-    abstract fun favoriteDao() : Favorite
+    abstract fun favoriteDao() : FavoriteDao
 
     companion object {
         private var INSTANCE : FavoriteDatabase? = null
@@ -26,7 +26,6 @@ abstract class FavoriteDatabase : RoomDatabase() {
                     INSTANCE = it
                 }
             }
-
         }
     }
 

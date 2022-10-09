@@ -2,11 +2,13 @@ package com.affan.githubuserapp.domain
 
 import com.affan.githubuserapp.data.DataSource
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.favorite.Favorite
 import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 
 class RepositoryImp (
-    private val remoteDataSource: DataSource
+    private val remoteDataSource: DataSource,
+    private val localDataSource : DataSource
         ) : Repository {
 
     override suspend fun getSearchUsers(
@@ -28,6 +30,18 @@ class RepositoryImp (
         perPage : Int
     ): RepositoryResponse {
         return remoteDataSource.getRepository(userName,perPage)
+    }
+
+    override suspend fun getAllFavorite(): List<Favorite> {
+        return localDataSource.getAllFavorite()
+    }
+
+    override suspend fun insertFavorite(user: Favorite) {
+        return localDataSource.insertFavorite(user)
+    }
+
+    override suspend fun deleteFavorite(user: Favorite) {
+        return localDataSource.deleteFavorite(user)
     }
 
 }

@@ -2,6 +2,7 @@ package com.affan.githubuserapp.data.remote
 
 import com.affan.githubuserapp.data.DataSource
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.favorite.Favorite
 import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 
@@ -28,6 +29,18 @@ class RemoteDataSource(
         perPage : Int
     ): RepositoryResponse {
         return apiService.getRepository(userName, perPage)
+    }
+
+    override suspend fun getAllFavorite(): List<Favorite> {
+        throw UnsupportedOperationException("User Local Data Source")
+    }
+
+    override suspend fun insertFavorite(user: Favorite) {
+        throw UnsupportedOperationException("User Local Data Source")
+    }
+
+    override suspend fun deleteFavorite(user: Favorite) {
+        throw UnsupportedOperationException("User Local Data Source")
     }
 
 }

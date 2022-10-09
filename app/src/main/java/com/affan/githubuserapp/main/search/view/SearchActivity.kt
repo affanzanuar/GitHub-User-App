@@ -42,7 +42,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance
+            ViewModelFactory.getInstance(this)
         )[SearchViewModel::class.java]
 
         mLayoutManager = LinearLayoutManager(this)

@@ -1,6 +1,7 @@
 package com.affan.githubuserapp.data
 
 import com.affan.githubuserapp.data.model.details.DetailsResponse
+import com.affan.githubuserapp.data.model.favorite.Favorite
 import com.affan.githubuserapp.data.model.repository.RepositoryResponse
 import com.affan.githubuserapp.data.model.user.UserResponse
 
@@ -21,4 +22,9 @@ interface DataSource {
         perPage : Int
     ): RepositoryResponse
 
+    suspend fun getAllFavorite () : List<Favorite>
+
+    suspend fun insertFavorite (user : Favorite)
+
+    suspend fun deleteFavorite (user : Favorite)
 }
