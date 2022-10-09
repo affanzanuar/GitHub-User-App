@@ -24,9 +24,10 @@ class RemoteDataSource(
     }
 
     override suspend fun getRepository(
-        userName: String
+        userName: String,
+        perPage : Int
     ): RepositoryResponse {
-        return apiService.getRepository(userName)
+        return apiService.getRepository(userName, perPage)
     }
 
 }

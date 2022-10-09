@@ -51,7 +51,7 @@ class DetailsViewModel (private val repository : Repository) : ViewModel() {
             runCatching {
                 _isLoading.value = true
                 withContext(Dispatchers.IO){
-                    repository.getRepository(userName)
+                    repository.getRepository(userName,100)
                 }
             }.onSuccess { data ->
                 withContext(Dispatchers.Main){

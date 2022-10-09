@@ -24,6 +24,7 @@ interface ApiService {
     @GET("users/{username}/repos")
     suspend fun getRepository (
         @Path("username") userName: String,
+        @Query("per_page") perPage : Int
     ) : RepositoryResponse
 
 }

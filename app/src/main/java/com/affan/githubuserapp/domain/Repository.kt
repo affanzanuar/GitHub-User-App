@@ -18,6 +18,7 @@ interface Repository {
 
     suspend fun getRepository (
         userName: String,
+        perPage : Int
     ): RepositoryResponse
 
 }

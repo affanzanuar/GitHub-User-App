@@ -18,6 +18,7 @@ interface DataSource {
 
     suspend fun getRepository (
         userName: String,
+        perPage : Int
     ): RepositoryResponse
 
 }

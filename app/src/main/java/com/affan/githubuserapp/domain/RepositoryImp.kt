@@ -24,9 +24,10 @@ class RepositoryImp (
     }
 
     override suspend fun getRepository(
-        userName: String
+        userName: String,
+        perPage : Int
     ): RepositoryResponse {
-        return remoteDataSource.getRepository(userName)
+        return remoteDataSource.getRepository(userName,perPage)
     }
 
 }
